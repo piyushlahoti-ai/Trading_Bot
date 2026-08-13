@@ -293,15 +293,15 @@ The application was also manually tested through the CLI using Market and Limit 
 
 ### 🔌 Bot Startup & Interactive Menu
 
-![Bot Menu](screenshots/bot-menu.png)
+![Bot Menu](bot-menu.png)
 
 ### 📈 Market Order
 
-![Market Order](screenshots/market-order.png)
+![Market Order](market-order.png)
 
 ### 📊 Limit Order
 
-![Limit Order](screenshots/limit-order.png)
+![Limit Order](limit-order.png)
 
 ---
 
