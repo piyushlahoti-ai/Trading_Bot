@@ -1,53 +1,69 @@
-# 🤖 Binance Futures Testnet Trading Bot
+# 🤖 Binance Futures Trading Bot
 
-A **production-quality**, modular Python trading bot that connects to the
-[Binance USDT-M Futures Testnet](https://testnet.binancefuture.com) and lets
-you place **MARKET** and **LIMIT** orders via a clean CLI or an interactive
-terminal menu — with full logging, rich console output, and robust error
-handling throughout.
+A modular Python-based trading bot designed for the **Binance Futures Testnet/Demo environment**. The application allows users to place **Market** and **Limit** BUY/SELL orders through both a command-line interface and an interactive terminal menu.
+
+The project focuses on API integration, secure credential management, input validation, structured logging, error handling, and reusable Python architecture.
 
 ---
 
 ## ✨ Features
 
-| Feature | Details |
-|---|---|
-| ✅ Testnet only | Connects exclusively to `https://testnet.binancefuture.com` |
-| ✅ API key loading | Reads credentials from `.env` via `python-dotenv` |
-| ✅ Credential validation | Verifies keys before placing any order |
-| ✅ Market orders | BUY & SELL market orders via CLI |
-| ✅ Limit orders | BUY & SELL limit orders with price validation |
-| ✅ Interactive menu | Numbered Rich menu (bonus feature) |
-| ✅ Input validation | Symbol, side, quantity, price — all validated with friendly errors |
-| ✅ Structured logging | Rotating file log + coloured console output |
-| ✅ Beautiful output | Rich-powered tables and panels |
-| ✅ Robust error handling | API errors, timeouts, network failures, bad input — never crashes |
+* 📈 **Market Orders** — Supports BUY and SELL market orders
+* 📊 **Limit Orders** — Supports BUY and SELL limit orders
+* 🖥️ **Interactive CLI Menu** — Simple terminal-based interface
+* ⚙️ **Command-Line Commands** — Direct order placement through CLI arguments
+* 🔐 **Secure API Authentication** — Credentials loaded through environment variables
+* ✅ **Input Validation** — Validates symbol, side, quantity, and price
+* 📝 **Structured Logging** — Records application activity, API responses, and errors
+* 🎨 **Rich Console Output** — Clean tables, panels, and status messages
+* 🛡️ **Error Handling** — Handles API, network, timeout, validation, and unexpected errors
+* 🧩 **Modular Architecture** — Separate modules for API, orders, validation, configuration, and logging
 
 ---
 
-## 🗂️ Project Structure
+## 🛠️ Tech Stack
 
-```
-trading_bot/
+* **Python 3.x**
+* **Binance Futures API**
+* **python-binance**
+* **Typer**
+* **Rich**
+* **python-dotenv**
+* **Logging**
+* **Git & GitHub**
+
+---
+
+## 📂 Project Structure
+
+```text
+Trading_Bot/
 │
 ├── bot/
-│   ├── __init__.py        # Package metadata
-│   ├── client.py          # Binance client factory + credential validation
-│   ├── orders.py          # place_market_order / place_limit_order
-│   ├── validators.py      # All input validation helpers
-│   ├── logging_config.py  # Rotating file + coloured console logging
-│   ├── cli.py             # Typer commands + interactive Rich menu
-│   └── config.py          # Settings dataclass (reads from .env)
+│   ├── __init__.py
+│   ├── api.py
+│   ├── client.py
+│   ├── config.py
+│   ├── logging_config.py
+│   ├── orders.py
+│   └── validators.py
 │
-├── logs/
-│   └── trading.log        # Auto-created on first run
+├── tests/
+│   └── test_client.py
 │
-├── .env.example           # Template — copy to .env and fill in keys
+├── screenshots/
+│   ├── bot-menu.png
+│   ├── market-order.png
+│   └── limit-order.png
+│
+├── .env.example
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-└── main.py                # Entry point
+└── main.py
 ```
+
+> `logs/trading.log` is generated automatically when the application runs and should not be committed to the repository.
 
 ---
 
@@ -56,18 +72,22 @@ trading_bot/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/trading-bot.git
-cd trading-bot/trading_bot
+git clone https://github.com/piyushlahoti-ai/Trading_Bot.git
+cd Trading_Bot
 ```
 
-### 2. Create a virtual environment (recommended)
+### 2. Create a virtual environment
+
+#### Windows
 
 ```bash
-# Windows
 python -m venv .venv
 .venv\Scripts\activate
+```
 
-# macOS / Linux
+#### macOS / Linux
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
@@ -80,241 +100,244 @@ pip install -r requirements.txt
 
 ---
 
-## 🔑 Environment Variables
+## 🔐 API Configuration
 
-Copy the example file and fill in your Testnet API keys:
+Create a `.env` file in the project root based on `.env.example`.
 
-```bash
-cp .env.example .env
+```env
+BINANCE_API_KEY=your_api_key_here
+BINANCE_API_SECRET=your_api_secret_here
 ```
 
-Then edit `.env`:
+The application loads these credentials using `python-dotenv`.
 
-```dotenv
-BINANCE_API_KEY=your_testnet_api_key_here
-BINANCE_API_SECRET=your_testnet_api_secret_here
-```
+### ⚠️ Security
 
-### Getting Testnet API Keys
+**Never upload your `.env` file or API credentials to GitHub.**
 
-1. Go to [https://testnet.binancefuture.com](https://testnet.binancefuture.com)
-2. Log in (create a free account if needed)
-3. Navigate to **API Management**
-4. Generate a new API key/secret pair
-5. Paste them into your `.env` file
+The `.env` file should remain local and should be included in `.gitignore`.
 
-> ⚠️ **Never** commit your `.env` file to version control. It is already in
-> `.gitignore`.
+Only `.env.example` should be committed to the repository.
 
 ---
 
 ## 🚀 Usage
 
-### Interactive Menu (default — no arguments required)
+### Interactive Menu
+
+Run:
 
 ```bash
 python main.py
-# or explicitly:
-python main.py menu
 ```
 
-You will see:
+The bot starts with an interactive menu:
 
-```
-╭──────────────────────────────╮
-│   Binance Futures Testnet    │
-│         Trading Bot          │
-╰──────────────────────────────╯
+```text
+╭───────────────────────────────╮
+│                               │
+│    Binance Futures Trading    │
+│              Bot              │
+│                               │
+╰───────────────────────────────╯
 
- Key   Action
-═════════════════════════
-  1    Market Buy
-  2    Market Sell
-  3    Limit Buy
-  4    Limit Sell
-  5    Exit
+Interactive Menu
 
-Select an option: _
-```
-
----
-
-### Market Order (CLI)
-
-```bash
-python main.py market \
-  --symbol BTCUSDT \
-  --side BUY \
-  --quantity 0.01
-```
-
-```bash
-python main.py market --symbol ETHUSDT --side SELL --quantity 0.1
+1. Market Buy
+2. Market Sell
+3. Limit Buy
+4. Limit Sell
+5. Exit
 ```
 
 ---
 
-### Limit Order (CLI)
+## 📈 Market Orders
+
+### Market BUY
 
 ```bash
-python main.py limit \
-  --symbol BTCUSDT \
-  --side SELL \
-  --quantity 0.01 \
-  --price 120000
+python main.py market --symbol BTCUSDT --side BUY --quantity 1
 ```
 
+### Market SELL
+
 ```bash
-python main.py limit --symbol ETHUSDT --side BUY --quantity 0.5 --price 2000
+python main.py market --symbol BTCUSDT --side SELL --quantity 1
 ```
+
+The bot displays an order summary containing available information such as:
+
+* Symbol
+* Side
+* Order type
+* Quantity
+* Order ID
+* Status
+* Executed quantity
+* Average price
 
 ---
 
-### Help
+## 📊 Limit Orders
+
+### Limit BUY
+
+```bash
+python main.py limit --symbol BTCUSDT --side BUY --quantity 1 --price 100000
+```
+
+### Limit SELL
+
+```bash
+python main.py limit --symbol BTCUSDT --side SELL --quantity 1 --price 120000
+```
+
+For LIMIT orders, the price must be provided and must be greater than zero.
+
+---
+
+## 🆘 CLI Help
+
+View available commands:
 
 ```bash
 python main.py --help
+```
+
+View Market order options:
+
+```bash
 python main.py market --help
-python main.py limit  --help
+```
+
+View Limit order options:
+
+```bash
+python main.py limit --help
 ```
 
 ---
 
-## 📊 Example Output
+## ✅ Input Validation
 
-```
-╭──────────────────────────────────╮
-│     Binance Futures Testnet      │
-│           Trading Bot            │
-╰──────────────────────────────────╯
+The application validates user input before submitting orders.
 
-Placing MARKET BUY order for 0.01 BTCUSDT…
+| Parameter  | Validation                 |
+| ---------- | -------------------------- |
+| `symbol`   | Must be a non-empty symbol |
+| `side`     | Must be `BUY` or `SELL`    |
+| `quantity` | Must be greater than `0`   |
+| `price`    | Required for LIMIT orders  |
+| `price`    | Must be greater than `0`   |
+| Order Type | MARKET or LIMIT            |
 
-╭──────────────────────── Order Summary ─────────────────────────╮
-│  Symbol           BTCUSDT                                       │
-│  Side             BUY                                           │
-│  Type             MARKET                                        │
-│  Quantity         0.010                                         │
-│  ─────────────── ──────────────────────                         │
-│  Status           FILLED                                        │
-│  Order ID         4521367890                                    │
-│  Client Order ID  x-HNA2EJOP3                                   │
-│  Executed Qty     0.010                                         │
-│  Average Price    65234.50                                      │
-╰─────────────────────────────────────────────────────────────────╯
-
-╭─────────────╮
-│  SUCCESS ✓  │
-╰─────────────╯
-```
+Invalid input results in a user-friendly error message instead of an unhandled application crash.
 
 ---
 
-## 📋 Validation Rules
+## 📝 Logging
 
-| Parameter | Rule |
-|---|---|
-| `symbol` | Non-empty string (normalised to uppercase) |
-| `side` | Must be `BUY` or `SELL` (case-insensitive) |
-| `quantity` | Must be a positive number (`> 0`) |
-| `price` | Required for LIMIT; must be positive. Must NOT be supplied for MARKET |
-| Order type | `market` or `limit` subcommand |
+The application automatically creates a runtime log file:
 
-Invalid input produces a friendly error panel — the app never crashes with a
-raw Python traceback.
-
----
-
-## 📁 Logging
-
-Logs are written to `logs/trading.log` with automatic rotation (5 MB per file,
-3 backups kept).
-
-Every entry includes:
-- Timestamp
-- Log level
-- Order request parameters
-- Raw API response
-- Errors, exceptions, and full stack traces
-
-Example log entries:
-
+```text
+logs/trading.log
 ```
-2024-01-15 14:32:10 [INFO    ] trading_bot — Credentials valid ✓  |  USDT Futures balance: 10000.00
-2024-01-15 14:32:11 [DEBUG   ] trading_bot — Placing BUY MARKET order | symbol=BTCUSDT | qty=0.01 | price=@ MARKET
-2024-01-15 14:32:12 [INFO    ] trading_bot — MARKET order SUCCESS | id=4521367890 | symbol=BTCUSDT | side=BUY | qty=0.010 | executedQty=0.010 | avgPrice=65234.50 | status=FILLED
-```
+
+The logging system records information such as:
+
+* Timestamp
+* Log level
+* Order requests
+* API responses
+* Errors
+* Exceptions
+* Debug information
+
+The log directory is excluded from the public repository.
 
 ---
 
 ## 🛡️ Error Handling
 
-| Scenario | Behaviour |
-|---|---|
-| Missing `.env` / empty keys | Friendly error panel before any API call |
-| Invalid API key | Caught as `BinanceAPIException`, displayed clearly |
-| Internet failure | `ConnectionError` caught, helpful message shown |
-| Request timeout | Caught and displayed; logged with full details |
-| Invalid user input | `typer.BadParameter` → friendly red error panel |
-| Unexpected exception | Caught, logged with stack trace, friendly message shown |
+The application handles several common failure scenarios:
 
-The bot **never** exits with an unhandled Python traceback.
+* Missing environment variables
+* Invalid API credentials
+* Binance API errors
+* Network failures
+* Request timeouts
+* Invalid user input
+* Unexpected exceptions
+
+Errors are logged and presented through user-friendly console messages.
 
 ---
 
-## 🔧 Configuration
+## 🧪 Testing
 
-All settings live in `bot/config.py` and `bot/logging_config.py`.
+The project includes tests for important application components, including:
 
-| Setting | Default | Description |
-|---|---|---|
-| `futures_base_url` | `https://testnet.binancefuture.com` | Testnet API base URL |
-| `request_timeout` | `15` seconds | HTTP request timeout |
-| `log_file` | `logs/trading.log` | Log file path |
-| `MAX_BYTES` | `5 242 880` (5 MB) | Max log file size before rotation |
-| `BACKUP_COUNT` | `3` | Number of rotated log files to keep |
+* Module imports
+* Input validation
+* Order result handling
+* API response parsing
+* Error handling
+* Logging configuration
+
+The application was also manually tested through the CLI using Market and Limit order workflows in the simulated trading environment.
 
 ---
 
 ## 🖼️ Screenshots
 
-> Add screenshots of your terminal output here after running the bot.
+### 🔌 Bot Startup & Interactive Menu
+
+![Bot Menu](screenshots/bot-menu.png)
+
+### 📈 Market Order
+
+![Market Order](screenshots/market-order.png)
+
+### 📊 Limit Order
+
+![Limit Order](screenshots/limit-order.png)
 
 ---
 
 ## 🚀 Future Improvements
 
-- [ ] **Account balance display** — show USDT balance before placing orders
-- [ ] **Open positions viewer** — list current open positions in a Rich table
-- [ ] **Cancel order support** — cancel an open order by ID
-- [ ] **WebSocket live prices** — stream real-time price feed in the menu
-- [ ] **Stop-Loss / Take-Profit** — attach SL/TP to orders
-- [ ] **Order history** — retrieve and display recent order history
-- [ ] **Unit tests** — pytest suite with mocked Binance responses
-- [ ] **Docker support** — Dockerfile + compose for containerised deployment
-- [ ] **Telegram notifications** — send order confirmations via Telegram bot
+Possible future improvements include:
 
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m 'Add my feature'`
-4. Push: `git push origin feature/my-feature`
-5. Open a Pull Request
+* Open positions viewer
+* Order cancellation by Order ID
+* Order history
+* WebSocket-based live price updates
+* Stop-Loss / Take-Profit support
+* Additional order types
+* Docker support
+* Telegram notifications
+* Expanded automated test coverage
 
 ---
 
 ## ⚠️ Disclaimer
 
-This bot connects to the **Testnet only** and uses **fake** funds.
-Do **not** use this code with real Binance API keys without a thorough security
-review. Trading involves risk; this software is provided for educational
-purposes only.
+This project is intended for **educational and development purposes** and uses a simulated Binance Futures trading environment.
+
+Do not use real trading credentials with this project without performing an appropriate security review and testing the implementation thoroughly.
+
+---
+
+## 👨‍💻 Author
+
+**Piyush Lahoti**
+
+* GitHub: https://github.com/piyushlahoti-ai
+* LinkedIn: https://linkedin.com/in/piyush-lahoti-a1a373275
 
 ---
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+This project is licensed under the **MIT License**.
