@@ -1,0 +1,22 @@
+# Binance Futures Testnet Trading Bot — required dependencies
+# Install with:  pip install -r requirements.txt
+
+# Binance SDK (includes websocket support)
+python-binance==1.0.19
+
+# Environment variable loading
+python-dotenv==1.0.1
+
+# CLI framework
+typer==0.15.3
+shellingham>=1.3.0   # shell detection
+click==8.1.8         # Click 8.4+ has a breaking change incompatible with Typer 0.15
+
+# Rich terminal output (already pulled in by typer[all], pinned for clarity)
+rich==13.7.1
+
+# Colour support for console logging
+colorama==0.4.6
+
+# HTTP client (used internally by python-binance; explicit pin for reproducibility)
+requests==2.31.0

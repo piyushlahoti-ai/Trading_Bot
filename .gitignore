@@ -1,0 +1,38 @@
+# Git ignore rules for the Binance Futures Testnet Trading Bot
+
+# --- Secrets ---
+.env
+
+# --- Python cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.mypy_cache/
+.ruff_cache/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Log files ---
+logs/*.log
+logs/*.log.*
+
+# --- Distribution / packaging ---
+dist/
+build/
+*.egg-info/
+*.egg
+
+# --- IDE / editor ---
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- OS artefacts ---
+.DS_Store
+Thumbs.db
